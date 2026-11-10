@@ -1,45 +1,11 @@
-export interface IsshPluginManifest {
-    id: string
-    name: string
-    version: string
-    description: string
-    kind: 'feature' | 'appearance' | 'integration'
-    minAppVersion?: string
-    entry: string
-    permissions?: string[]
-    author?: string
-    homepage?: string
-    repository?: string
-    gatewayApiVersion?: string
-    capabilities?: string[]
-}
-
-export interface SettingsTabDefinition {
-    id: string
-    title: string
-    order?: number
-    component: unknown
-}
-
-export interface PluginStorage {
-    get (key: string): string | null
-    set (key: string, value: string): void
-    delete (key: string): void
-    keys (): string[]
-}
-
-export interface IsshPluginContext {
-    manifest: IsshPluginManifest
-    gateway: { ui: { registerPanel (panel: unknown): () => void }; log (level: 'info' | 'warn' | 'error', message: string): void }
-    registerSettingsTab (tab: SettingsTabDefinition): void
-    registerHomeCard (card: { id: string; title: string; order?: number; component: unknown }): void
-    registerPanel (panel: { id: string; title: string; placement: 'left' | 'bottom'; component: unknown }): void
-    registerTerminalDecorator (decorator: { id: string; decorate (options: { sessionId: string; kind: 'local' | 'ssh'; title: string }): void | Promise<void> }): void
-    storage: PluginStorage
-    log (level: 'info' | 'warn' | 'error', message: string): void
-}
-
-export interface IsshPlugin {
-    manifest: IsshPluginManifest
-    activate (ctx: IsshPluginContext): void | Promise<void>
-}
+// 插件侧类型已收敛到统一 Gateway SDK（packages/issh-gateway/src/types）。
+// 本文件仅保留 re-export；Web Serial 类型（SerialPort 等）来自运行时 lib，
+// 插件专属串口形状在 serialApi.ts（SerialOptions、SerialPortWriter）。
+// 历史差异说明：原本地 IsshPluginContext.gateway 仅声明 ui.registerPanel 与 log，
+// 为 SDK PluginGateway 的窄化子集；宿主传入完整 PluginGateway 可直接赋值，行为不变。
+export type {
+    IsshPlugin,
+    IsshPluginContext,
+    IsshPluginManifest,
+    PluginStorage,
+} from '../../../packages/issh-gateway/src/types'

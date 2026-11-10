@@ -12,8 +12,12 @@
         "@sveltejs/vite-plugin-svelte": "^6.0.0",
         "@tauri-apps/api": "^2.0.0",
         "svelte": "^5.0.0",
-        "vite": "^7.0.0"
+        "vite": "^7.3.7"
     },
     "license": "MIT",
-    "repository": "https://github.com/kingbywork-ui/issh-plugin-serial"
+    "repository": "https://github.com/kingbywork-ui/issh-plugin-serial",
+    "overrides": {
+        "devalue": "5.9.3",
+        "source-map-js": "1.2.2"
+    }
 }
